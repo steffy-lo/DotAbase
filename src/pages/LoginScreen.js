@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity} from 'react-native';
 import * as Google from 'expo-google-app-auth';
+import * as Facebook from 'expo-facebook';
 import { SocialIcon } from 'react-native-elements';
 import firebase from 'firebase';
+import { facebookConfig } from "../config";
 
 export default class LoginScreen extends React.Component {
 
@@ -20,7 +22,7 @@ export default class LoginScreen extends React.Component {
         return false;
     };
 
-    onSignIn = googleUser => {
+    onSignInGoogle = googleUser => {
         console.log('Google Auth Response', googleUser);
         // We need to register an Observer on Firebase Auth to make sure auth is initialized.
         const unsubscribe = firebase.auth().onAuthStateChanged(firebaseUser => {
@@ -59,13 +61,37 @@ export default class LoginScreen extends React.Component {
             });
 
             if (result.type === 'success') {
-                this.onSignIn(result);
+                this.onSignInGoogle(result);
                 return result.accessToken;
             } else {
                 return { cancelled: true };
             }
         } catch (e) {
             return { error: true };
+        }
+    };
+
+    signInWithFacebookAsync = async () => {
+        const appId = facebookConfig.appId;
+        try {
+            await Facebook.initializeAsync('1473322566207048');
+            const {
+                type,
+                token
+            } = await Facebook.logInWithReadPermissionsAsync({
+                appId,
+                permissions: ['public_profile', 'email'],
+            });
+            if (type === 'success') {
+                await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);  // Set persistent auth state
+                const credential = firebase.auth.FacebookAuthProvider.credential(token);
+                firebase.auth().signInWithCredential(credential)
+                    .catch(err => {
+                        console.log(err);
+                    });
+            }
+        } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
         }
     };
 
@@ -79,6 +105,13 @@ export default class LoginScreen extends React.Component {
                         type={"google"}
                         style={{ padding: '3%'}}
                         onPress={this.signInWithGoogleAsync}
+                    />
+                    <SocialIcon
+                        title={"Sign In With Facebook"}
+                        button
+                        type={"facebook"}
+                        style={{ padding: '3%'}}
+                        onPress={this.signInWithFacebookAsync}
                     />
                 </TouchableOpacity>
             </View>
