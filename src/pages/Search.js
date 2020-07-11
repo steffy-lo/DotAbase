@@ -11,18 +11,17 @@ export default class Search extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={styles.container}>
                 <Text style={{ marginTop: 50, fontSize: 25 }}>Search</Text>
             </View>
         );
     }
 }
+
 const styles = StyleSheet.create({
-    button: {
+    container: {
+        flex: 1,
         alignItems: 'center',
-        backgroundColor: '#DDDDDD',
-        padding: 10,
-        width: 300,
-        marginTop: 16,
+        justifyContent: 'center',
     },
 });
