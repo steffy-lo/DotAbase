@@ -8,11 +8,15 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "expo": "~38.0.8",
     "expo-facebook": "^8.2.1",
     "expo-google-app-auth": "^8.1.2",
     "expo-status-bar": "^1.0.2",
+    "express": "^4.17.1",
     "firebase": "7.9.0",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.23",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
