@@ -13,3 +13,4 @@ web-build/
 .DS_Store
 
 /src/config.js
+config.js

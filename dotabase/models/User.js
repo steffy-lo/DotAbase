@@ -4,6 +4,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    main_prof: {
+        type: Object,
+        default: {}
+    },
     profiles: {
         type: Array,
         default: []

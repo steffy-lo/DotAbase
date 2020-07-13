@@ -5,6 +5,7 @@ import * as Facebook from 'expo-facebook';
 import { SocialIcon } from 'react-native-elements';
 import firebase from 'firebase';
 import { facebookConfig } from "../config";
+import { newUser } from '../promises';
 
 export default class LoginScreen extends React.Component {
 
@@ -23,7 +24,6 @@ export default class LoginScreen extends React.Component {
     };
 
     onSignInGoogle = googleUser => {
-        console.log('Google Auth Response', googleUser);
         // We need to register an Observer on Firebase Auth to make sure auth is initialized.
         const unsubscribe = firebase.auth().onAuthStateChanged(firebaseUser => {
             unsubscribe();
@@ -36,6 +36,15 @@ export default class LoginScreen extends React.Component {
                 );
                 // Sign in with credential from the Google user.
                 firebase.auth().signInWithCredential(credential)
+                    .then(res => {
+                        if (res.additionalUserInfo.isNewUser) {
+                            console.log(googleUser.user.email)
+                            newUser({email: googleUser.user.email})
+                                .catch(err => {
+                                    console.log(err)
+                                })
+                        }
+                    })
                     .catch(function(error) {
                     // Handle Errors here.
                     const errorCode = error.code;
@@ -86,6 +95,15 @@ export default class LoginScreen extends React.Component {
                 await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);  // Set persistent auth state
                 const credential = firebase.auth.FacebookAuthProvider.credential(token);
                 firebase.auth().signInWithCredential(credential)
+                    .then(res => {
+                        if (res.additionalUserInfo.isNewUser) {
+                            console.log(res.user.email);
+                            newUser({email: res.user.email})
+                                .catch(err => {
+                                    console.log(err)
+                                })
+                        }
+                    })
                     .catch(err => {
                         console.log(err);
                     });

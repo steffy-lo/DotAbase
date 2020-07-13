@@ -1,9 +1,6 @@
 const express = require('express');
 const app = express();
-const { mongoose } = require('./db/mongoose');
-
-// Good practice: to validate object IDs
-const { ObjectID } = require('mongodb');
+const { mongoose } = require('./mongoose');
 
 // Mongoose Models
 const { User } = require('./models/User');
@@ -16,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/user', (req, res) => {
     const user = new User(req.body);
+    console.log(user);
     user.save().then((result) => {
         res.send(result)
     }, (error) => {
@@ -23,10 +21,14 @@ app.post('/user', (req, res) => {
     })
 });
 
-/* find a user by email using URL query as parameters*/
+/* find a user by mongoID using URL query as parameters*/
 app.get('/user', (req, res) => {
-    const email = req.query.email;
-    User.findOne({ email:email }).then(user => {
+    if (!ObjectID.isValid(req.query.id)) {
+        res.status(404).send();
+        return;
+    }
+    const query = {_id: req.query.id};
+    User.findOne(query).then(user => {
         if (!user) {
             res.status(404).send()
         } else {
@@ -37,9 +39,13 @@ app.get('/user', (req, res) => {
     })
 });
 
-/* remove a user by email */
+/* remove a user by mongoID */
 app.delete('/user', (req, res) => {
-    const query = { _id: req.query.email };
+    const query = {_id: req.query.id};
+    if (!ObjectID.isValid(req.query.id)) {
+        res.status(404).send();
+        return;
+    }
     User.deleteOne(query,
         (err, doc) => {
             if (err) return res.json({success: false, err});
@@ -49,8 +55,8 @@ app.delete('/user', (req, res) => {
 });
 
 app.patch('/user', (req, res) => {
-    const { email, profile } = req.body;
-    User.findOneAndUpdate({ email: email }, {$push: {profiles: [profile] }}, {new: true},)
+    const { user_id, profile } = req.body;
+    User.findByIdAndUpdate(user_id, {$push: {profiles: [profile] }}, {new: true})
         .then((user) => {
             if (!user) {
                 res.status(404).send()
@@ -64,5 +70,5 @@ app.patch('/user', (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    log(`Listening on port ${port}...`)
+    console.log(`Listening on port ${port}...`)
 });
