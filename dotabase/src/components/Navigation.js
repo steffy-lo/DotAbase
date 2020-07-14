@@ -4,13 +4,15 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Profile from '../pages/Profile';
 import Search from '../pages/Search';
 import Overview from '../pages/Overview';
+import HeroProfile from '../pages/HeroProfile'
 
 
 const TabNavigator = createBottomTabNavigator(
     {
         Profile: Profile,
         Overview: Overview,
-        Search: Search
+        Search: Search, 
+        HeroProfile: HeroProfile
     },
     {
         initialRouteName: 'Profile',
