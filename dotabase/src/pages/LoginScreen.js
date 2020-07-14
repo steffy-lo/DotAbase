@@ -3,11 +3,13 @@ import { View, TouchableOpacity} from 'react-native';
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
 import { SocialIcon } from 'react-native-elements';
+
 import firebase from 'firebase';
 import { facebookConfig } from "../config";
 import { newUser } from '../promises';
 
-export default class LoginScreen extends React.Component {
+
+class LoginScreen extends React.Component {
 
     isUserEqual = (googleUser, firebaseUser) => {
         if (firebaseUser) {
@@ -38,8 +40,7 @@ export default class LoginScreen extends React.Component {
                 firebase.auth().signInWithCredential(credential)
                     .then(res => {
                         if (res.additionalUserInfo.isNewUser) {
-                            console.log(googleUser.user.email)
-                            newUser({email: googleUser.user.email})
+                            newUser({email: googleUser.user.email, provider: 'google.com'})
                                 .catch(err => {
                                     console.log(err)
                                 })
@@ -97,8 +98,7 @@ export default class LoginScreen extends React.Component {
                 firebase.auth().signInWithCredential(credential)
                     .then(res => {
                         if (res.additionalUserInfo.isNewUser) {
-                            console.log(res.user.email);
-                            newUser({email: res.user.email})
+                            newUser({email: res.user.email, provider: 'facebook.com'})
                                 .catch(err => {
                                     console.log(err)
                                 })
@@ -136,3 +136,5 @@ export default class LoginScreen extends React.Component {
         );
     }
 }
+
+export default LoginScreen;

@@ -10,7 +10,6 @@ const DEBUG = 1;
 const PREFIX = DEBUG ? "http://192.168.0.23:3000" : "";
 
 export const newUser = data => {
-    console.log(JSON.stringify(data));
     return new Promise((resolve, reject) => {
         axios
             .post(
@@ -18,6 +17,25 @@ export const newUser = data => {
                 JSON.stringify(data),
                 { headers: { "Content-Type": "application/json" } }
             )
+            .then(res => {
+                if (!res || !res.data)
+                    reject({ stat: 500, msg: "Something went wrong" });
+                resolve(res.data);
+            })
+            .catch(err => {
+                reject({
+                    stat: err,
+                    msg: "There was an error processing your request. Please, try again later."
+                });
+            });
+    });
+};
+
+export const getUser = userId => {
+    console.log(userId);
+    return new Promise((resolve, reject) => {
+        axios
+            .get(PREFIX + "/user?id=" + userId)
             .then(res => {
                 if (!res || !res.data)
                     reject({ stat: 500, msg: "Something went wrong" });

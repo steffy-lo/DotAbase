@@ -1,13 +1,21 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import Icon from "react-native-vector-icons/FontAwesome";
+import { loadUserData } from "../actions";
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
     static navigationOptions = {
         tabBarIcon: ({tintColor}) => (
             <Icon name={'users'} size={30} color={tintColor} />
         )
     };
+
+    componentDidMount() {
+        const email = this.props.email;
+        const provider = this.props.provider;
+        this.props.loadUserData({email: email, provider: provider})
+    }
 
     render() {
         return (
@@ -86,3 +94,12 @@ const styles = StyleSheet.create({
         color: 'white'
     }
 });
+
+const mapStateToProps = state => {
+    return {
+        email: state.email,
+        provider: state.provider
+    }
+};
+
+export default connect(mapStateToProps, { loadUserData })(Profile);

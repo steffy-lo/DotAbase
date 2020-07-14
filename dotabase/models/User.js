@@ -4,9 +4,13 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    main_prof: {
+    provider: {
+        type: String,
+        required: true
+    },
+    my_profile: {
         type: Object,
-        default: {}
+        default: null
     },
     profiles: {
         type: Array,
