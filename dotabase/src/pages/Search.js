@@ -56,20 +56,26 @@ export default class Search extends React.Component {
         }); 
     }
 
+    toHeroProfile(){
+        this.props.navigation.navigate('HeroProfile');
+    }
+
     render() {
         if(this.state.loaded){
             return(
                 <View style={styles.container}>
-                    <Text style={{ marginTop: 50, marginLeft: 15, fontSize: 25 }}>Search Hero</Text>
+                    <Text style={styles.heading}>Search Hero</Text>
                     <SearchBar
                         placeholder="Type Here..."
                         onChangeText={this.updateSearch}
                         value={this.state.search}   
                     />
                     <FlatList data={this.state.matchedHeroes} keyExtractor = {(x,i)=>i} renderItem = {({item}) =>
-                    <Text style={{paddingLeft: 15, marginTop:15, paddingBottom:15, fontSize: 20, borderBottomColor: '#26a69a', borderBottomWidth:1}}>{`${item}`}</Text>} />
+                    <Text style={styles.flatList}>{`${item}`}
+                    
+                    </Text>} />
+                    <View><Button onPress={this.toHeroProfile.bind(this)} title="To Hero Profile"/></View>
                 </View>
-                
             )
         }else{
             return (
@@ -86,4 +92,18 @@ const styles = StyleSheet.create({
     container: {
         marginBottom: 34
     },
+    heading:{
+        marginTop: 50,
+        marginBottom:10,
+        marginLeft: 15,
+        fontSize: 25
+    },
+    flatList:{
+        paddingLeft: 15, 
+        marginTop:15, 
+        paddingBottom:15,
+        fontSize: 20,
+        borderBottomColor: '#26a69a',
+        borderBottomWidth:1
+    }
 });
