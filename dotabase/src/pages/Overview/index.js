@@ -1,13 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class Overview extends React.Component {
-    static navigationOptions = {
-        tabBarIcon: ({tintColor}) => (
-            <Icon name={'bar-chart'} size={30} color={tintColor} />
-        )
-    };
 
     render() {
         return (

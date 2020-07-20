@@ -1,15 +1,10 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import { loadUserData } from "../../actions";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { loadUserData } from "../actions";
 
 class Profile extends React.Component {
-    static navigationOptions = {
-        tabBarIcon: ({tintColor}) => (
-            <Icon name={'users'} size={30} color={tintColor} />
-        )
-    };
 
     componentDidMount() {
         const email = this.props.email;
