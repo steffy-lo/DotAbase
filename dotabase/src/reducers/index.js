@@ -1,6 +1,10 @@
 const initialState = {
     email: '',
-    provider: ''
+    provider: '',
+    user: {
+        my_profile: null,
+        profiles: []
+    }
 };
 
 export default (state = initialState, action) => {
@@ -14,7 +18,7 @@ export default (state = initialState, action) => {
         case 'USER_DATA':
             return {
                 ...state,
-                user: action.user
+                user: action.payload
             };
 
         default:

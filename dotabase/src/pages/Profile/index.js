@@ -9,10 +9,20 @@ class Profile extends React.Component {
     componentDidMount() {
         const email = this.props.email;
         const provider = this.props.provider;
-        this.props.loadUserData({email: email, provider: provider})
+        this.props.loadUserData({email: email, provider: provider});
     }
 
     render() {
+        const profiles = this.props.user["profiles"].map(prof => {
+            return (
+                <View key={prof} style={[styles.element, styles.container]}>
+                    <TouchableOpacity style={styles.container}>
+                        <Icon name={'user'} size={45} color={'white'}/>
+                        <Text style={styles.white}>{prof.username}</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        });
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -32,30 +42,7 @@ class Profile extends React.Component {
                         </View>
                     </View>
                     <View style={styles.row}>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 1</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 2</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 3</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 4</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {profiles}
                     </View>
                 </View>
             </ScrollView>
@@ -93,7 +80,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
     return {
         email: state.email,
-        provider: state.provider
+        provider: state.provider,
+        user: state.user
     }
 };
 
