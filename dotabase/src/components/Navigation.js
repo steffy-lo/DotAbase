@@ -12,7 +12,12 @@ const TabNavigator = createBottomTabNavigator(
         Profile: Profile,
         Overview: Overview,
         Search: Search, 
-        HeroProfile: HeroProfile
+        HeroProfile:{
+            screen: HeroProfile,
+            navigationOptions:{
+                visible:false
+            }
+        }
     },
     {
         initialRouteName: 'Profile',

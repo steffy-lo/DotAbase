@@ -46,9 +46,9 @@ export default class Search extends React.Component {
 
     fetchHero(search){
         this.state.matchedHeroes = []; //empty array
-        let searchHero = search.toLowerCase().replace(/ /g,"_");;
+        let searchHero = search.toLowerCase().replace(/ /g,"_");
         this.state.data.some((hero) => {
-            if (hero.name.startsWith(search, 14)){
+            if (hero.name.startsWith(searchHero, 14)){
                 let heroName = hero.name.charAt(14).toUpperCase() + hero.name.slice(15);
                 heroName = heroName.replace(/_/g, " ");
                 this.state.matchedHeroes.push(heroName);
@@ -70,7 +70,7 @@ export default class Search extends React.Component {
                         onChangeText={this.updateSearch}
                         value={this.state.search}   
                     />
-                    <FlatList data={this.state.matchedHeroes} keyExtractor = {(x,i)=>i} renderItem = {({item}) =>
+                    <FlatList data={this.state.matchedHeroes} keyExtractor = {(x,i)=>i.toString()} renderItem = {({item}) =>
                     <Text style={styles.flatList}>{`${item}`}
                     
                     </Text>} />
