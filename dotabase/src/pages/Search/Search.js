@@ -58,11 +58,13 @@ export default class Search extends React.Component {
         if(this.state.loaded){
             return(
                 <View style={styles.container}>
-                    <Text style={styles.heading}>Search Hero</Text>
+                    <View style={styles.title}>
+                        <Text style={styles.header}>Search Hero</Text>
+                    </View>
                     <SearchBar
                         placeholder="Type Here..."
                         onChangeText={this.updateSearch}
-                        value={this.state.search}   
+                        value={this.state.search}
                     />
                     <FlatList data={this.state.matchedHeroes} keyExtractor = {(x,i)=>i.toString()} renderItem = {({item}) =>
                     <Text style={styles.flatList}>{`${item}`}
@@ -71,10 +73,12 @@ export default class Search extends React.Component {
                     <View><Button onPress={this.toHeroProfile.bind(this)} title="To Hero Profile"/></View>
                 </View>
             )
-        }else{
+        } else {
             return (
                 <View>
-                    <Text style={{ marginTop: 50, marginLeft: 15,fontSize: 25 }}>Loading...</Text>
+                    <View style={styles.title}>
+                        <Text style={styles.header}>Loading...</Text>
+                    </View>
                 </View>
             );
         }
@@ -86,11 +90,14 @@ const styles = StyleSheet.create({
     container: {
         marginBottom: 34
     },
-    heading:{
+    title: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    header: {
         marginTop: 50,
-        marginBottom:10,
-        marginLeft: 15,
-        fontSize: 25
+        marginBottom: 20,
+        fontSize: 25,
     },
     flatList:{
         paddingLeft: 15, 

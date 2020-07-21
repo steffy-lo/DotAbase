@@ -10,15 +10,6 @@ import React from "react";
 
 const TabNavigator = createBottomTabNavigator(
     {
-<<<<<<< HEAD
-        Profile: Profile,
-        Overview: Overview,
-        Search: Search, 
-        HeroProfile:{
-            screen: HeroProfile,
-            navigationOptions:{
-                visible:false
-=======
         Profile: {
             screen: Profile,
             navigationOptions: {
@@ -45,7 +36,6 @@ const TabNavigator = createBottomTabNavigator(
                 tabBarIcon: ({tintColor}) => (
                     <Icon name={'search'} size={30} color={tintColor} />
                 )
->>>>>>> 4e178feb1be869b4fefb2d01e461d3607c1e3afe
             }
         }
     },

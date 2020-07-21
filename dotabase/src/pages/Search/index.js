@@ -5,4 +5,4 @@ import Search from './Search';
 export default createStackNavigator({
     Search,
     HeroProfile
-});
+}, { headerMode: "none" });
