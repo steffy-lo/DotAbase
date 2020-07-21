@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import Navigation from './src/components/Navigation';
 import LoadingScreen from "./src/pages/LoadingScreen";
 import LoginScreen from "./src/pages/LoginScreen";

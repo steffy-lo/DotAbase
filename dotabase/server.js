@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const { mongoose } = require('./mongoose');
+const { ObjectID } = require('mongodb');
 
 // Mongoose Models
 const { User } = require('./models/User');
@@ -23,12 +24,9 @@ app.post('/user', (req, res) => {
 
 /* find a user by mongoID using URL query as parameters*/
 app.get('/user', (req, res) => {
-    if (!ObjectID.isValid(req.query.id)) {
-        res.status(404).send();
-        return;
-    }
-    const query = {_id: req.query.id};
-    User.findOne(query).then(user => {
+    const email = req.query.email;
+    const provider = req.query.provider;
+    User.findOne({ email: email, provider: provider }).then(user => {
         if (!user) {
             res.status(404).send()
         } else {

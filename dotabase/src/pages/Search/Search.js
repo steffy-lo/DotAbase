@@ -10,12 +10,6 @@ export default class Search extends React.Component {
         data: [],
         matchedHeroes: [],
         loaded: false
-    }
-
-    static navigationOptions = {
-        tabBarIcon: ({tintColor}) => (
-            <Icon name={'search'} size={30} color={tintColor} />
-        )
     };
 
     updateSearch = (search) => {

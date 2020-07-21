@@ -1,15 +1,28 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import { loadUserData } from "../../actions";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-export default class Profile extends React.Component {
-    static navigationOptions = {
-        tabBarIcon: ({tintColor}) => (
-            <Icon name={'users'} size={30} color={tintColor} />
-        )
-    };
+class Profile extends React.Component {
+
+    componentDidMount() {
+        const email = this.props.email;
+        const provider = this.props.provider;
+        this.props.loadUserData({email: email, provider: provider});
+    }
 
     render() {
+        const profiles = this.props.user["profiles"].map(prof => {
+            return (
+                <View key={prof} style={[styles.element, styles.container]}>
+                    <TouchableOpacity style={styles.container}>
+                        <Icon name={'user'} size={45} color={'white'}/>
+                        <Text style={styles.white}>{prof.username}</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        });
         return (
             <ScrollView>
                 <View style={styles.container}>
@@ -29,30 +42,7 @@ export default class Profile extends React.Component {
                         </View>
                     </View>
                     <View style={styles.row}>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 1</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 2</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 3</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={[styles.element, styles.container]}>
-                            <TouchableOpacity style={styles.container}>
-                                <Icon name={'user'} size={45} color={'white'}/>
-                                <Text style={styles.white}>User 4</Text>
-                            </TouchableOpacity>
-                        </View>
+                        {profiles}
                     </View>
                 </View>
             </ScrollView>
@@ -86,3 +76,13 @@ const styles = StyleSheet.create({
         color: 'white'
     }
 });
+
+const mapStateToProps = state => {
+    return {
+        email: state.email,
+        provider: state.provider,
+        user: state.user
+    }
+};
+
+export default connect(mapStateToProps, { loadUserData })(Profile);
