@@ -19,7 +19,7 @@ class Profiles extends React.Component {
     }
 
     openProfile() {
-        if (this.props.user.my_profile != null) {
+        if (this.props.user.my_profile == null) {
             this.props.navigation.navigate('SearchProfiles')
         } else {
             this.props.navigation.navigate('ProfileDetail')
@@ -43,7 +43,7 @@ class Profiles extends React.Component {
                     <Text style={styles.header}>Profiles</Text>
                     <View style={styles.row}>
                         <View style={[styles.element, styles.container, {flex: 1}]}>
-                            <TouchableOpacity style={styles.container}>
+                            <TouchableOpacity style={styles.container} onPress={() => this.props.navigation.navigate('SearchProfiles')}>
                                 <Icon name={'user-plus'} size={45} color={'white'}/>
                                 <Text style={styles.white}>Add Profile</Text>
                             </TouchableOpacity>

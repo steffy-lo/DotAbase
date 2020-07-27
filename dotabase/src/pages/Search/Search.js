@@ -66,10 +66,11 @@ export default class Search extends React.Component {
                         onChangeText={this.updateSearch}
                         value={this.state.search}
                     />
-                    <FlatList data={this.state.matchedHeroes} keyExtractor = {(x,i)=>i.toString()} renderItem = {({item}) =>
-                    <Text style={styles.flatList}>{`${item}`}
-                    
-                    </Text>} />
+                    <FlatList data={this.state.matchedHeroes} keyExtractor = {(x,i)=>i.toString()}
+                              renderItem = {({item}) =>
+                                  <Text style={styles.flatList}>{`${item}`}
+                                  </Text>}
+                    />
                     <View><Button onPress={this.toHeroProfile.bind(this)} title="To Hero Profile"/></View>
                 </View>
             )
