@@ -49,10 +49,11 @@ export default class Search extends React.Component {
                                   if (item.last_match_time !== undefined)
                                       return item.last_match_time.substring(0, 10);
                                   else
-                                      return ""
+                                      return "Unknown"
                               };
                               return (
                                   <View>
+                                      <TouchableOpacity style={styles.container}>
                                       <Image
                                           style={{width: 50, height: 50}}
                                           source={{
@@ -62,6 +63,7 @@ export default class Search extends React.Component {
                                       <Text style={styles.flatList}>{item.account_id}</Text>
                                       <Text style={styles.flatList}>{item.personaname}</Text>
                                       <Text style={styles.flatList}>{last_match_time()}</Text>
+                                      </TouchableOpacity>
                                   </View>
                               );
                           }
@@ -74,8 +76,7 @@ export default class Search extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        justifyContent: 'center',
+        margin: '2%'
     },
     header: {
         marginTop: 50,
